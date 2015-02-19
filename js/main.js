@@ -12,12 +12,12 @@ $(document).ready(function () {
   $('#navicon').on('click', function(evt) {
     if ( $(this).hasClass('active') ) {
       $(this).removeClass('active');
-      $(this).children('i').removeClass('fa-rotate-90');
+      animateRotate($("#navicon .fa"), 'left');
       $('#menu').slideUp();
     }
     else {
       $(this).addClass('active');
-      $(this).children('i').addClass('fa-rotate-90');
+      animateRotate($("#navicon .fa"), 'right');
       $('#menu').slideDown();
     }
     evt.preventDefault();
@@ -27,7 +27,7 @@ $(document).ready(function () {
   $('html').click(function(evt) {
     if ( $('#navicon').hasClass('active') ) {
       $('#navicon').removeClass('active');
-      $('#navicon').children('i').removeClass('fa-rotate-90');
+      animateRotate($("#navicon .fa"), 'left');
       $('#menu').slideUp();
     }
   });
@@ -46,4 +46,33 @@ $(document).ready(function () {
       }
     }
   });
+
+  $('.menu-a').on('click',function (e) {
+      e.preventDefault();
+
+      var target = this.hash;
+      var $target = $(target);
+      $('html, body').stop().animate({'scrollTop': $target.offset().top
+      }, 900, 'swing', function () {
+          window.location.hash = target;
+      });
+  });
 })
+
+function animateRotate(elem, direction){
+    if (direction == "left") {
+      d1 = 180;
+      d2 = 0;
+    } else if (direction = "right") {
+      d1 = 0;
+      d2 = 180;
+    }
+    $({deg: d1}).animate({deg: d2}, {
+        duration: 800,
+        step: function(now){
+            elem.css({
+                 transform: "rotate(" + now + "deg)"
+            });
+        }
+    });
+}
