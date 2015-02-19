@@ -39,9 +39,11 @@ $(document).ready(function () {
   $(window).scroll(function() {
     if($(window).scrollTop() + $(window).height() == $(document).height()) {
       var newval = $(window).height() - 55;
-      $('.logo').css("top", newval);
+      $('.logo').stop(true, true).animate({ top: newval }, 600 );
     } else {
-      $('.logo').css("top", "50px");
+      if ($('.logo').css('top') != '50px') {
+        $('.logo').animate({ top: "50px" }, 600 );
+      }
     }
   });
 })
